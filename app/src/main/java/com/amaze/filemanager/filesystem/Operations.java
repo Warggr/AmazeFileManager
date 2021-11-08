@@ -62,7 +62,9 @@ import jcifs.smb.SmbFile;
 import net.schmizz.sshj.sftp.SFTPClient;
 
 public class Operations {
-
+  //CYCLO / LOC = 21/604 = 0.03 < 0.16
+  //LOC / METHOD = 604 / 9 = 67 > 10
+  //FANOUT/METHOD looks too high
   private static Executor executor = AsyncTask.THREAD_POOL_EXECUTOR;
 
   private static final String TAG = Operations.class.getSimpleName();
@@ -145,26 +147,12 @@ public class Operations {
           return null;
         }
         if (file.isSftp()) {
-          file.mkdir(context);
-          return null;
+          return file.mkkdir(context, parentFile, errorCallBack);
         }
         if (file.isSmb()) {
-          try {
-            file.getSmbFile(2000).mkdirs();
-          } catch (SmbException e) {
-            e.printStackTrace();
-            errorCallBack.done(file, false);
-            return null;
-          }
-          errorCallBack.done(file, file.exists());
-          return null;
+          return file.mkkdir(context);
         } else if (file.isOtgFile()) {
-          if (checkOtgNewFileExists(file, context)) {
-            errorCallBack.exists(file);
-            return null;
-          }
-          safCreateDirectory.apply(OTGUtil.getDocumentFile(parentFile.getPath(), context, false));
-          return null;
+          return file.mkkdir(context);
         } else if (file.isDocumentFile()) {
           if (checkDocumentFileNewFileExists(file, context)) {
             errorCallBack.exists(file);

@@ -58,7 +58,7 @@ import java.util.EnumSet;
 
 import jcifs.smb.SmbException;
 
-public class SFTPfile extends HybridFile {
+public class SFTPfile extends HybridFile.InnerFile {
 
   @Nullable
   public DocumentFile getDocumentFile(boolean createRecursive) {
@@ -258,7 +258,7 @@ public class SFTPfile extends HybridFile {
                   context,
                   context.getString(
                       R.string.cannot_read_directory,
-                      parseAndFormatUriForDisplay(path),
+                      HybridFile.parseAndFormatUriForDisplay(path),
                       e.getMessage()));
             }
             return true;
@@ -303,7 +303,7 @@ public class SFTPfile extends HybridFile {
 
   @Override
   public String getReadablePath(String path) {
-    return parseAndFormatUriForDisplay(path);
+    return HybridFile.parseAndFormatUriForDisplay(path);
   }
 
   /**
@@ -462,11 +462,5 @@ public class SFTPfile extends HybridFile {
               }
             });
     return retval != null && retval;
-  }
-
-  @Override
-  public Void mkkdir(Context context) {
-    mkdir(context);
-    return null;
   }
 }

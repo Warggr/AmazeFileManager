@@ -43,8 +43,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 
-/** Hybrid file for handeling all types of files */
-public class DOCUMENTfile extends HybridFile {
+public class DOCUMENTfile extends HybridFile.InnerFile {
 
   @Override
   public long lastModified() {

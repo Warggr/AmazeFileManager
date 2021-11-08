@@ -41,21 +41,8 @@ import com.cloudrail.si.types.SpaceAllocation;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-public class CLOUDfile extends HybridFile {
+public class CLOUDfile extends HybridFile.InnerFile {
   protected OpenMode mode;
-
-  @Override
-  protected void init(boolean isDirectory) {
-    if (path.startsWith(SMB_URI_PREFIX)) {
-      Uri.Builder pathBuilder = Uri.parse(this.path).buildUpon().appendEncodedPath(name);
-      if ((path.startsWith(SMB_URI_PREFIX)) && isDirectory) {
-        pathBuilder.appendEncodedPath("/");
-      }
-      this.path = pathBuilder.build().toString();
-    } else {
-      this.path += "/" + name;
-    }
-  }
 
   /** Helper method to find length */
   public long length(Context context) {

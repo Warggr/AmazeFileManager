@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 
-public class SMBfile extends HybridFile {
+public class SMBfile extends HybridFile.InnerFile {
 
   @Override
   public String getName(Context context) {
@@ -97,19 +97,6 @@ public class SMBfile extends HybridFile {
 
   @Override
   public String getReadablePath(String path) {
-    return parseAndFormatUriForDisplay(path);
-  }
-
-  @Override
-  public Void mkkdir(Context context) {
-    try {
-      file.getSmbFile(2000).mkdirs();
-    } catch (SmbException e) {
-      e.printStackTrace();
-      errorCallBack.done(file, false);
-      return null;
-    }
-    errorCallBack.done(file, file.exists());
-    return null;
+    return HybridFile.parseAndFormatUriForDisplay(path);
   }
 }

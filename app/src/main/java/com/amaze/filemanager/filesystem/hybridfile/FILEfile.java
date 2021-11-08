@@ -33,7 +33,7 @@ import com.amaze.filemanager.filesystem.files.FileUtils;
 import java.io.File;
 
 /** Hybrid file for handeling all types of files */
-public class FILEfile extends HybridFile {
+public class FILEfile extends HybridFile.InnerFile {
   @Override
   public long lastModified() {
     return getFile().lastModified();

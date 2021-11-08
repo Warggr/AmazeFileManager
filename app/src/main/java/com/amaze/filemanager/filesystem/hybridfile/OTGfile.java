@@ -43,8 +43,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-/** Hybrid file for handeling all types of files */
-public class OTGfile extends HybridFile {
+public class OTGfile extends HybridFile.InnerFile {
 
   @Nullable
   public DocumentFile getDocumentFile(boolean createRecursive) {
@@ -199,15 +198,5 @@ public class OTGfile extends HybridFile {
         parentDirectory.createDirectory(getName(context));
       }
     }
-  }
-
-  @Override
-  public Void mkkdir(Context context){
-    if (checkOtgNewFileExists(this, context)) {
-      errorCallBack.exists(file);
-      return null;
-    }
-    safCreateDirectory.apply(OTGUtil.getDocumentFile(parentFile.getPath(), context, false));
-    return null;
   }
 }
